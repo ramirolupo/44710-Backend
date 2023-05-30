@@ -1,0 +1,13 @@
+{
+  "name": "02---segundo-entregable",
+  "version": "1.0.0",
+  "description": "",
+  "main": "02.segundoEntregable.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

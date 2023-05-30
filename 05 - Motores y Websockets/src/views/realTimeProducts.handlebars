@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="form-container">
+        <form id="form" class="form">
+            <div class="form-group">
+                <label for="title">Producto:</label>
+                <input type="text" name="name" id="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Descripción:</label>
+                <input type="text" name="description" id="description" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Precio:</label>
+                <input type="text" name="price" id="price" required>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="text" name="stock" id="stock" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Estado:</label>
+                <input type="text" name="status" id="status" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Categoría:</label>
+                <input type="text" name="category" id="category" required>
+            </div>
+            <div class="form-group">
+                <label for="code">Código:</label>
+                <input type="text" name="code" id="code" required>
+            </div>
+            <input type="submit" id="send" value="Agregar Producto">
+        </form>
+    </div>
+    <div class="delete-form-container">
+        <form id="delete-form" class="form">
+            <div class="form-group">
+                <label for="delete-id">ID del producto a borrar:</label>
+                <input type="text" name="id" id="delete-id" required>
+            </div>
+            <input type="submit" id="delete" value="Eliminar Producto">
+        </form>
+    </div>
+    <div class="list-container">
+        <div id="output"></div>
+    </div>
+</div>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/index.js"></script>

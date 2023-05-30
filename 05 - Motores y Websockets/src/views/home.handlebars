@@ -1,0 +1,17 @@
+{{#if products.length}}
+    {{#each products}}
+    <ul>
+        <div class="product-info">
+            <li><span>Título:</span> {{title}}</li>
+            <li><span>Descripción:</span> {{description}}</li>
+            <li><span>Precio:</span> {{price}}</li>
+            <li><span>Stock:</span> {{stock}}</li>
+            <li><span>Estado:</span> {{status}}</li>
+            <li><span>Categoría:</span> {{category}}</li>
+            <li><span>Código:</span> {{code}}</li>
+        </div>
+    </ul>
+    {{/each}}
+{{else}}
+    <p>No hay productos cargados</p>
+{{/if}}
