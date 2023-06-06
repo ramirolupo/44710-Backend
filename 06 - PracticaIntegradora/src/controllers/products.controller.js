@@ -4,7 +4,7 @@ import {
     createService,
     updateService,
     deleteService,
-  } from "../services/products.services.js";
+  } from '../services/products.services.js';
   
   export const getAllController = async (req, res, next) => {
     try {
