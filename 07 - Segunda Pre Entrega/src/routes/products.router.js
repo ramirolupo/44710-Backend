@@ -1,18 +1,13 @@
 import { Router } from 'express';
-import {
-  getAllController,
-  getByIdController,
-  createController,
-  updateController,
-  deleteController,
-  } from '../controllers/products.controllers.js';
+import * as controller from '../controllers/products.controller.js';
 
 const router = Router();
 
-router.get('/', getAllController);
-router.get('/:id', getByIdController);
-router.post('/', createController);
-router.put('/:id', updateController);
-router.delete('/:id', deleteController);
+router.post('/file', controller.createFileCtr);
+
+router.get('/', controller.getAllProducts);
+
+router.get('/aggregation1', controller.aggregation1);
+
 
 export default router;

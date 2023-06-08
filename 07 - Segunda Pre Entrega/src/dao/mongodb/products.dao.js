@@ -1,10 +1,10 @@
-import { ProductsModel } from "./models/products.model.js";
+import { ProductModel } from "./models/products.model.js";
 
-export default class ProductsDaoMongoDB {
+export default class ProductDaoMongoDB {
 
   async getAllProducts() {
     try {
-     const response = await ProductsModel.find({});
+     const response = await ProductModel.paginate({}, { page, limit });
      return response;
     } catch (error) {
       console.log(error);
@@ -13,7 +13,7 @@ export default class ProductsDaoMongoDB {
 
   async getProductById(id) {
     try {
-      const response = await ProductsModel.findById(id);
+      const response = await ProductModel.findById(id);
       return response;
     } catch (error) {
       console.log(error);
@@ -22,7 +22,7 @@ export default class ProductsDaoMongoDB {
 
   async createProduct(obj) {
     try {
-      const response = await ProductsModel.create(obj);
+      const response = await ProductModel.create(obj);
       return response;
     } catch (error) {
       console.log(error);
@@ -31,7 +31,7 @@ export default class ProductsDaoMongoDB {
 
   async updateProduct(id, obj) {
     try {
-      await ProductsModel.updateOne({_id: id}, obj);
+      await ProductModel.updateOne({_id: id}, obj);
       return obj;
     } catch (error) {
       console.log(error);
@@ -40,10 +40,32 @@ export default class ProductsDaoMongoDB {
 
   async deleteProduct(id) {
     try {
-      const response = await ProductsModel.findByIdAndDelete(id);
+      const response = await ProductModel.findByIdAndDelete(id);
       return response;
     } catch (error) {
       console.log(error);
     }
   }
+
+  async aggregation1(){
+    try {
+      const response = await UserModel.aggregate([
+        {
+          $group: {
+            _id: '$brand'
+          }
+        },
+        {
+          $sort: {
+            price: -1
+          }
+        }
+      ])
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
 }
