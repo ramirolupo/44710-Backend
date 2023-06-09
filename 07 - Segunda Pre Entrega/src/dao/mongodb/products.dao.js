@@ -5,13 +5,13 @@ export default class ProductDaoMongoDB {
   async getAllProducts(page = 1, limit = 10, sort, query) {
     try{
       let result;
-
+      const filter = { brand: query };
       if (query) {
         result = await ProductModel.aggregate([
-          { $match: query },
-          { $sort: { price: sort }},
-          { $skip: (page - 1) * limit },
-          { $limit: limit }
+          { $match: filter },
+          { $sort: { price: parseInt(sort) }},
+          { $skip: (parseInt(page) - 1) * parseInt(limit) },
+          { $limit: parseInt(limit) }
         ]);
       } else {
         result = await ProductModel.paginate({}, { page, limit, sort: { price: sort }});
@@ -52,26 +52,6 @@ export default class ProductDaoMongoDB {
   async deleteProduct(id) {
     try {
       const response = await ProductModel.findByIdAndDelete(id);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async aggregation1(){
-    try {
-      const response = await UserModel.aggregate([
-        {
-          $group: {
-            _id: '$brand'
-          }
-        },
-        {
-          $sort: {
-            price: -1
-          }
-        }
-      ])
       return response;
     } catch (error) {
       console.log(error);
