@@ -7,5 +7,7 @@ router.post('/file', controller.createFileCtr);
 
 router.get('/', controller.getAllProducts);
 
+router.post('/add/:idProd/:idCart', controller.addProductToCart);
+
 
 export default router;

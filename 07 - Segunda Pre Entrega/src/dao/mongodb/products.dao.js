@@ -1,4 +1,5 @@
 import { ProductModel } from "./models/products.model.js";
+import { CartModel } from "./models/carts.model.js";
 
 export default class ProductDaoMongoDB {
 
@@ -49,12 +50,33 @@ export default class ProductDaoMongoDB {
     }
   }
 
+  async addProductToCart(idProd, idCart) {
+    try {
+      const cart = await CartModel.findById(idCart);
+      if (!cart) { throw new Error('Cart not found')}
+      const prodIndex = cart.products.findIndex(p => p.product._id.toString() === idProd.toString());
+      const product = await ProductModel.findById(idProd);
+      if (!product) { throw new Error('Product not found')}
+      if (prodIndex !== -1) {
+        cart.products[prodIndex].quantity += 1;
+      } else {
+        cart.products.push({ product: product, quantity: 1 })
+      }                         
+      await cart.save();                            
+      return cart;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   async deleteProduct(id) {
     try {
       const response = await ProductModel.findByIdAndDelete(id);
       return response;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
 

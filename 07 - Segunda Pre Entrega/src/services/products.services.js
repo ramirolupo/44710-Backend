@@ -57,6 +57,17 @@ export const getProductById = async (id) => {
       console.log(error);
     }
   };
+
+
+  export const addProductToCart = async (idProd, idCart) => {
+    try {
+      const newCart = await prodDao.addProductToCart(idProd, idCart);
+      if (!newCart) throw new Error("Validation Error!");
+      else return newCart;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   
   export const deleteProduct = async (id) => {
     try {

@@ -74,6 +74,21 @@ export const updateProduct = async (req, res, next) => {
   }
 };
 
+
+export const addProductToCart = async (req, res, next) => {
+  try {
+    const { idProd } = req.params;
+    const { idCart } = req.params;
+    const newCart = await service.addProductToCart(idProd, idCart);
+    if (!newCart) throw new Error("Validation Error!");
+    else
+      res.json(newCart);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 export const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
