@@ -14,7 +14,7 @@ export const getAllCarts = async () => {
   export const getCartById = async (id) => {
     try {
       const cart = await cartsDao.getCartById(id);
-      if (!cart) throw new Error("Validation Error!");
+      if (!cart) throw new Error("Cart not found!");
       else return cart;
     } catch (error) {
       console.log(error);
@@ -63,17 +63,6 @@ export const getAllCarts = async () => {
     try {
         const productsDeleted = await cartsDao.deleteCartProducts(id);
         return productsDeleted;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
-  
-  export const deletePet = async (id) => {
-    try {
-        const petDeleted = await cartsDao.deletePet(id);
-        return petDeleted;
     } catch (error) {
       console.log(error);
     }
