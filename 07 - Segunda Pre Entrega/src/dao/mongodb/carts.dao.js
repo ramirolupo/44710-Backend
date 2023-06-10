@@ -60,9 +60,9 @@ export default class CartsDaoMongoDB {
     }
   }
 
-  async deleteCartProducts(id) {
+  async deleteCartProducts(idCart) {
     try {
-      const response = await CartModel.findById(id);
+      const response = await CartModel.findById(idCart);
       if (!response) { throw new Error('Cart not found') }
       response.products = [];
       return response;
@@ -86,13 +86,12 @@ export default class CartsDaoMongoDB {
   }
 
 
-  async deleteCart(id) {
+  async deleteCart(idCart) {
     try {
-      const response = await CartModel.findByIdAndDelete(id);
-      if (!response) { throw new Error('Cart not found') }
+      const response = await CartModel.findByIdAndDelete(idCart);
       return response;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 }

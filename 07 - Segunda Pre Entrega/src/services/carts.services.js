@@ -59,11 +59,29 @@ export const getAllCarts = async () => {
     }
   };
 
-  export const deleteCartProducts = async (id) => {
+  export const deleteCartProducts = async (idCart) => {
     try {
-        const productsDeleted = await cartsDao.deleteCartProducts(id);
+        const productsDeleted = await cartsDao.deleteCartProducts(idCart);
         return productsDeleted;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  export const deleteProductFromCart = async (idProd, idCart) => {
+    try {
+        const productDeleted = await cartsDao.deleteCartProducts(idProd, idCart);
+        return productDeleted;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  export const deleteCart = async (idCart) => {
+    try {
+        const cart = await cartsDao.deleteCart(idCart);
+        return cart;
+    } catch (error) {
+      throw error;
     }
   };

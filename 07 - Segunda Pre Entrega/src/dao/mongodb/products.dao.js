@@ -60,7 +60,7 @@ export default class ProductDaoMongoDB {
       if (prodIndex !== -1) {
         cart.products[prodIndex].quantity += 1;
       } else {
-        cart.products.push({ product: product, quantity: 1 })
+        cart.products.push({ product: idProd, quantity: 1 })
       }                         
       await cart.save();                            
       return cart;
