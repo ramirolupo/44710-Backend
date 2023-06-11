@@ -71,13 +71,17 @@ export default class CartsDaoMongoDB {
     }
   }
 
-  async deleteProductFromCart(idProd, idCart) {
+  async deleteProductFromCart(idCart, idProd) {
     try {
+      const cart = await CartModel.findById(idCart);
+      const prodIndex = cart.products.findIndex(p => p.product._id.toString() === idProd.toString());
+      const product = cart.products[prodIndex]
       const response = await CartModel.findByIdAndUpdate(
         idCart,
-        { $pull: { products: idProd } },
+        { $pull: {products: { product: idProd }} },
         { new: true }
       );
+      console.log(response);
       if (!response) { throw new Error('Cart not found') }
       return response;
     } catch (error) {

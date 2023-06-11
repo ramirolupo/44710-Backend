@@ -68,9 +68,9 @@ export const getAllCarts = async () => {
     }
   };
 
-  export const deleteProductFromCart = async (idProd, idCart) => {
+  export const deleteProductFromCart = async (idCart, idProd) => {
     try {
-        const productDeleted = await cartsDao.deleteCartProducts(idProd, idCart);
+        const productDeleted = await cartsDao.deleteCartProducts(idCart, idProd);
         return productDeleted;
     } catch (error) {
       console.log(error);

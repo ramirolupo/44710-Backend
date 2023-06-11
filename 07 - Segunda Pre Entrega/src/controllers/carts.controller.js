@@ -51,7 +51,7 @@ export const updateProductCart = async (req, res, next) => {
   try {
     const { idCart, idProd } = req.params;
     const { quantity } = req.body;
-    const newCart = await service.updateProductCart(idProd, idCart, quantity);
+    const newCart = await service.updateProductCart(idCart, idProd, quantity);
     if (!newCart) throw new Error("Validation Error!");
     else
       res.json(newCart);

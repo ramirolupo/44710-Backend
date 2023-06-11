@@ -8,10 +8,11 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(errorHandler);
 
 app.use('/products', productsRouter);
 app.use('/carts', cartsRouter);
+
+app.use(errorHandler);
 
 const PORT = 8080;
 
