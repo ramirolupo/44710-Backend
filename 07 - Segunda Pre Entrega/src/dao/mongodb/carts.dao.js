@@ -65,6 +65,7 @@ export default class CartsDaoMongoDB {
       const response = await CartModel.findById(idCart);
       if (!response) { throw new Error('Cart not found') }
       response.products = [];
+      await response.save();
       return response;
     } catch (error) {
       console.log(error);
@@ -73,13 +74,27 @@ export default class CartsDaoMongoDB {
 
   async deleteProductFromCart(idCart, idProd) {
     try {
-      const response = await CartModel.findByIdAndUpdate(
-        idCart,
-        { $pull: {products: { product: idProd }} },
-        { new: true }
-      );
-      if (!response) { throw new Error('Cart not found') }
-      return response;
+      const cart = await CartModel.findById(idCart);
+
+      if(!cart) { throw new Error('Cart not found') }
+
+      const prodIndex = cart.products.findIndex(p => p.product._id.toString() === idProd.toString());
+
+      if (prodIndex !== -1){
+        if (cart.products[prodIndex].quantity > 1) {
+          cart.products[prodIndex].quantity -= 1;
+          await cart.save();
+        } else {
+          const response = await CartModel.findByIdAndUpdate(
+            idCart,
+            { $pull: {products: { product: idProd }} },
+            { new: true } 
+          );
+          return response;
+        }} else {
+          throw new Error('Product not found')
+        };
+        
     } catch (error) {
       console.log(error);
     }
