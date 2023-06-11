@@ -70,7 +70,7 @@ export const getAllCarts = async () => {
 
   export const deleteProductFromCart = async (idCart, idProd) => {
     try {
-        const productDeleted = await cartsDao.deleteCartProducts(idCart, idProd);
+        const productDeleted = await cartsDao.deleteProductFromCart(idCart, idProd);
         return productDeleted;
     } catch (error) {
       console.log(error);
