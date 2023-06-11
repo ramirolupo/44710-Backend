@@ -73,9 +73,6 @@ export default class CartsDaoMongoDB {
 
   async deleteProductFromCart(idCart, idProd) {
     try {
-      const cart = await CartModel.findById(idCart);
-      const prodIndex = cart.products.findIndex(p => p.product._id.toString() === idProd.toString());
-      const product = cart.products[prodIndex]
       const response = await CartModel.findByIdAndUpdate(
         idCart,
         { $pull: {products: { product: idProd }} },
