@@ -78,7 +78,6 @@ export default class CartsDaoMongoDB {
         { $pull: {products: { product: idProd }} },
         { new: true }
       );
-      console.log(response);
       if (!response) { throw new Error('Cart not found') }
       return response;
     } catch (error) {
