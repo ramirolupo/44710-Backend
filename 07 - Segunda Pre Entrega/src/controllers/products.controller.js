@@ -16,6 +16,7 @@ export const getAllProducts = async (req, res, next) => {
   try {
     const { page, limit, sort, query } = req.query;
     const response = await service.getAllProducts(page, limit, sort, query);
+    console.log(response);
     const next = response.hasNextPage ? `http://localhost:8080/products?page=${response.nextPage}` : null
     const prev = response.hasPrevPage ? `http://localhost:8080/products?page=${response.prevPage}` : null
     const status = res.statusCode === 200 ? 'Success' : 'Error';
@@ -36,8 +37,8 @@ export const getAllProducts = async (req, res, next) => {
 
 export const getByIdProduct = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const product = await service.getByIdProduct(id);
+    const { idProd } = req.params;
+    const product = await service.getByIdProduct(idProd);
     res.json(product);
   } catch (error) {
     next(error);
@@ -62,10 +63,10 @@ export const createProduct = async (req, res, next) => {
 
 export const updateProduct = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { idProd } = req.params;
     const { brand, model, description, price, stock } = req.body;
-    await service.getByIdProduct(id);
-    const prodUpd = await service.updateProduct(id, {
+    await service.getByIdProduct(idProd);
+    const prodUpd = await service.updateProduct(idProd, {
       brand, model, description, price, stock
     });
     res.json(prodUpd);
@@ -91,8 +92,8 @@ export const addProductToCart = async (req, res, next) => {
 
 export const deleteProduct = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    await service.deleteProduct(id);
+    const { idProd } = req.params;
+    await service.deleteProduct(idProd);
     res.json({message: 'Product deleted successfully!'})
   } catch (error) {
     next(error);

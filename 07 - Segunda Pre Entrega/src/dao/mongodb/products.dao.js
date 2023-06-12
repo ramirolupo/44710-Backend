@@ -5,27 +5,29 @@ export default class ProductDaoMongoDB {
 
   async getAllProducts(page = 1, limit = 10, sort, query) {
     try{
-      let result;
-      const filter = { brand: query };
+      const options = {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        sort: { price: sort }
+      };
+
+      const filter = {};
+
       if (query) {
-        result = await ProductModel.aggregate([
-          { $match: filter },
-          { $sort: { price: parseInt(sort) }},
-          { $skip: (parseInt(page) - 1) * parseInt(limit) },
-          { $limit: parseInt(limit) }
-        ]);
-      } else {
-        result = await ProductModel.paginate({}, { page, limit, sort: { price: sort }});
+        filter.brand = { $regex: new RegExp(query, 'i') };
       }
+
+      const result = await ProductModel.paginate(filter, options);
+  
       return result;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async getProductById(id) {
+  async getProductById(idProd) {
     try {
-      const response = await ProductModel.findById(id);
+      const response = await ProductModel.findById(idProd);
       return response;
     } catch (error) {
       console.log(error);
@@ -41,9 +43,9 @@ export default class ProductDaoMongoDB {
     }
   }
 
-  async updateProduct(id, obj) {
+  async updateProduct(idProd, obj) {
     try {
-      await ProductModel.updateOne({_id: id}, obj);
+      await ProductModel.updateOne({_id: idProd}, obj);
       return obj;
     } catch (error) {
       console.log(error);
@@ -70,9 +72,9 @@ export default class ProductDaoMongoDB {
     }
   }
 
-  async deleteProduct(id) {
+  async deleteProduct(idProd) {
     try {
-      const response = await ProductModel.findByIdAndDelete(id);
+      const response = await ProductModel.findByIdAndDelete(idProd);
       return response;
     } catch (error) {
       console.log(error);

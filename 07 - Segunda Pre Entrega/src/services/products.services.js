@@ -24,9 +24,9 @@ export const getAllProducts = async (page, limit, sort, query) => {
     }
 };
 
-export const getProductById = async (id) => {
+export const getProductById = async (idProd) => {
     try {
-      const prod = await prodDao.getProductById(id);
+      const prod = await prodDao.getProductById(idProd);
       if(!prod) throw new Error('Product not found');
       else return prod;
     } catch (error) {
@@ -44,13 +44,13 @@ export const getProductById = async (id) => {
     }
   };
   
-  export const updateProduct = async (id, obj) => {
+  export const updateProduct = async (idProd, obj) => {
     try {
-      const doc = await prodDao.getProductById(id);
+      const doc = await prodDao.getProductById(idProd);
       if(!doc){
          throw new Error('Product not found');
       } else {
-        const prodUpd = await prodDao.updateProduct(id, obj);
+        const prodUpd = await prodDao.updateProduct(idProd, obj);
         return prodUpd;
       }
     } catch (error) {
@@ -69,9 +69,9 @@ export const getProductById = async (id) => {
     }
   };
   
-  export const deleteProduct = async (id) => {
+  export const deleteProduct = async (idProd) => {
     try {
-       const prodDel = await prodDao.deleteProduct(id);
+       const prodDel = await prodDao.deleteProduct(idProd);
        return prodDel;
     } catch (error) {
       console.log(error);
