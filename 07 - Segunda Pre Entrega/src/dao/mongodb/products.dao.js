@@ -4,24 +4,25 @@ import { CartModel } from "./models/carts.model.js";
 export default class ProductDaoMongoDB {
 
   async getAllProducts(page = 1, limit = 10, sort, query) {
-    try{
-      const options = {
-        page: parseInt(page),
-        limit: parseInt(limit),
-        sort: { price: sort }
-      };
-
-      const filter = {};
-
+    try {
+      let result;
+  
+      let filter = {};
+  
       if (query) {
-        filter.brand = { $regex: new RegExp(query, 'i') };
+        const [key, value] = query.split(":");
+  
+        const formattedValue = value.charAt(0).toUpperCase() + value.slice(1);
+        
+        filter = { [key]: formattedValue };
       }
-
-      const result = await ProductModel.paginate(filter, options);
+  
+      result = await ProductModel.paginate(filter, { page, limit, sort: { price: sort } });
   
       return result;
     } catch (error) {
       console.log(error);
+      // Manejar el error adecuadamente o lanzar una excepción según tus necesidades
     }
   }
 

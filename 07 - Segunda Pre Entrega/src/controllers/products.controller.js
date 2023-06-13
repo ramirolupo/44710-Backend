@@ -47,13 +47,16 @@ export const getByIdProduct = async (req, res, next) => {
 
 export const createProduct = async (req, res, next) => {
   try {
-    const { brand, model, description, price, stock } = req.body;
+    const { brand, model, description, price, stock, status, category, thumbnails } = req.body;
     const newProd = await service.createProduct({
       brand,
       model,
       description,
       price,
-      stock
+      stock,
+      status,
+      category,
+      thumbnails
     });
     res.json(newProd);
   } catch (error) {
@@ -64,10 +67,10 @@ export const createProduct = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
   try {
     const { idProd } = req.params;
-    const { brand, model, description, price, stock } = req.body;
+    const { brand, model, description, price, stock, status, category, thumbnails } = req.body;
     await service.getByIdProduct(idProd);
     const prodUpd = await service.updateProduct(idProd, {
-      brand, model, description, price, stock
+      brand, model, description, price, stock, status, category, thumbnails
     });
     res.json(prodUpd);
   } catch (error) {
