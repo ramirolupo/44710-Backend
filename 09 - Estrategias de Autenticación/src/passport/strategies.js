@@ -18,8 +18,7 @@ const register = async (req, email, password, done) => {
         return done(null, newUser);
 
     } catch (error) {
-        console.log(error);
-        throw new Error(error);        
+        console.log(error);      
     }
 };
 
@@ -33,7 +32,6 @@ const login = async (req, email, password, done) => {
 
     } catch (error) {
         console.log(error);
-        throw new Error(error);
     };
 };
 
