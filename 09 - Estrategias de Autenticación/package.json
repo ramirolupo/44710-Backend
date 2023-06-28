@@ -10,7 +10,7 @@
     "passport-github2": "^0.1.12",
     "passport-local": "^1.0.0"
   },
-  "name": "08---cookies-y-sessions",
+  "name": "09---estrategias-de-autenticacion",
   "version": "1.0.0",
   "main": "./src/server.js",
   "type": "module",
