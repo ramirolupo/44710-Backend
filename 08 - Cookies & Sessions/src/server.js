@@ -9,27 +9,24 @@ import mongoStore from 'connect-mongo';
 
 const app = express();
 
+app.use(
+  session({
+    secret: 'sessionKey',
+    resave: false,
+    saveUninitialized: true,
+    store: new mongoStore({
+      mongoUrl: 'mongodb+srv://ramaalupo:admin@rlcluster.v1kncvp.mongodb.net/ecommerce?retryWrites=true&w=majority',
+      ttl: 10,
+    }),
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/products', productsRouter);
 app.use('/carts', cartsRouter);
 app.use('/users', usersRouter);
-
-app.use(
-    session({
-      secret: 'sessionKey',
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        maxAge: 10000
-      },
-      store: new mongoStore({
-        mongoUrl: 'mongodb+srv://ramaalupo:admin@rlcluster.v1kncvp.mongodb.net/ecommerce?retryWrites=true&w=majority',
-        ttl: 10,
-      }),
-    })
-);
 
 app.use(errorHandler);
 
