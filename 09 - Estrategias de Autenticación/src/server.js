@@ -11,17 +11,11 @@ import './passport/strategies.js';
 
 const app = express();
 
-app.use(express.json());
-//app.use(express.urlencoded({extended: true}));
-
 app.use(
   session({
     secret: 'sessionKey',
     resave: false,
     saveUninitialized: true,
-    cookie: {
-      maxAge: 10000
-    },
     store: new mongoStore({
       mongoUrl: 'mongodb+srv://ramaalupo:admin@rlcluster.v1kncvp.mongodb.net/ecommerce?retryWrites=true&w=majority',
       ttl: 10,
@@ -31,6 +25,11 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 
 app.use('/products', productsRouter);
 app.use('/carts', cartsRouter);
