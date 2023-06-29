@@ -34,6 +34,25 @@ export const loginResponse = async(req, res, next)=>{
   }
 };
 
+export const githubResponse = async(req, res, next)=>{
+    try {
+        const { first_name, last_name, email, role, isGithub } = req.user;
+        res.json({
+            msg: 'Register/Login Github OK',
+            session: req.session,
+            userData: {
+                first_name,
+                last_name,
+                email,
+                role,
+                isGithub
+            }
+        })
+    } catch (error) {
+        next(error);
+    }
+};
+
 
 export const logout = async (req, res) => {
     req.session.destroy((err) => {

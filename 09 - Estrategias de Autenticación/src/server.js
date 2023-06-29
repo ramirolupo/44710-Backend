@@ -8,6 +8,7 @@ import session from 'express-session';
 import mongoStore from 'connect-mongo';
 import passport from 'passport';
 import './passport/strategies.js';
+import './passport/github.js';
 
 const app = express();
 
