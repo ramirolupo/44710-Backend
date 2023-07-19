@@ -8,6 +8,7 @@ import session from 'express-session';
 import mongoStore from 'connect-mongo';
 import passport from 'passport';
 import config from './config.js';
+import routerApi from './routes/index.js';
 import './passport/local.js';
 import './passport/github.js';
 
@@ -29,16 +30,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-
-app.use('/products', productsRouter);
-app.use('/carts', cartsRouter);
-app.use('/users', usersRouter);
-
-
+app.use('/api', routerApi);
 
 app.use(errorHandler);
 
