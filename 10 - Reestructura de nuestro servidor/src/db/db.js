@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import config from '../config.js';
 
-const connectionString = 'mongodb+srv://ramaalupo:admin@rlcluster.v1kncvp.mongodb.net/ecommerce?retryWrites=true&w=majority';
+const connectionString = config.MONGO_DB;
 
 try {
     await mongoose.connect(connectionString);
