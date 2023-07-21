@@ -1,3 +1,4 @@
+import { log } from "console";
 import UserDao from "../dao/mongodb/users.dao.js";
 
 const userDao = new UserDao();
@@ -32,6 +33,18 @@ export const loginResponse = async(req, res, next)=>{
   } catch (error) {
       next(error);
   }
+};
+
+export const loginAuthenticate = async(req, res, next)=>{
+    try {
+        const user = await userDao.getById(req.session.passport.user);
+        const { email } = user;
+        res.json({
+            msg: `The user ${email} is logged in`
+        });
+    } catch (error) {
+        next(error);
+    }
 };
 
 export const githubResponse = async(req, res, next)=>{
