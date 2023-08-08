@@ -3,7 +3,7 @@ import * as controller from '../controllers/carts.controller.js';
 
 const router = Router();
 
-router.get('/', controller.getAllCarts);
+router.get('/', isAuth, isAdmin, controller.getAllCarts);
 
 router.get('/:idCart', controller.getCartById);
 
@@ -11,7 +11,7 @@ router.post('/', controller.createCart);
 
 router.put('/:idCart', controller.updateCart); 
 
-router.put('/:idCart/products/:idProd', controller.updateProductCart);
+router.put('/:idCart/products/:idProd', isAuth, controller.updateProductCart);
 
 router.delete('/products/:idCart', controller.deleteCartProducts);
 

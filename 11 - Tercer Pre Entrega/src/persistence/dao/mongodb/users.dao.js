@@ -13,13 +13,13 @@ export default class UserDao {
         } else {
           const newUser = await userModel.create({...user, password: createHash(password)})
           return newUser;
-        }
+        }    
+
       } else {
         return false;
       }
     } catch (error) {
       console.log(error)
-      throw new Error(error)
     }
   }
 

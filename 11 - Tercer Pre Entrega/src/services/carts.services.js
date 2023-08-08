@@ -27,7 +27,7 @@ export const getAllCarts = async () => {
     try {
       const cart = await cartsDao.getCartById(id);
       if (!cart) throw new Error("Cart not found!");
-      else return cart;
+      return cart;
     } catch (error) {
       console.log(error);
     }
