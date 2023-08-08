@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 const ticketSchema = new mongoose.Schema({
     code: { type: String, default: uuidv4, unique: true },
@@ -9,4 +10,4 @@ const ticketSchema = new mongoose.Schema({
 });
 
 
-export const TicketModel = mongoose.model('tickets',ticketSchema);
+export const ticketModel = mongoose.model('tickets',ticketSchema);

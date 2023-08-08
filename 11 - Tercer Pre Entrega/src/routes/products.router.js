@@ -1,21 +1,22 @@
 import { Router } from 'express';
 import * as controller from '../controllers/products.controller.js';
+import { isAdmin } from '../middlewares/isAdmin.js';
+import { isAuth } from '../middlewares/isAuth.js';
+import { isUser } from '../middlewares/isUser.js';
 
 const router = Router();
 
-router.post('/file', controller.createFileCtr);
+router.post('/file', isAuth, isAdmin, controller.createFileCtr);
 
-router.get('/', controller.getAllProducts);
+router.get('/', isAuth, controller.getAllProducts);
 
-router.get('/:idProd', controller.getByIdProduct);
+router.get('/:idProd', isAuth, controller.getByIdProduct);
 
-router.post('/add', controller.createProduct);
+router.post('/add', isAuth, isAdmin, controller.createProduct);
 
-router.put('/:idProd');
+router.post('/add/:idProd/:idCart', isAuth, isUser, controller.addProductToCart);
 
-router.post('/add/:idProd/:idCart', controller.addProductToCart);
-
-router.delete('/:idProd', controller.deleteProduct);
+router.delete('/:idProd', isAuth, isAdmin, controller.deleteProduct);
 
 
 export default router;

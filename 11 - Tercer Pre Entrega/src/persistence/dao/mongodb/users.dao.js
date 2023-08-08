@@ -1,5 +1,5 @@
 import { userModel } from './models/users.model.js';
-import { createHash, isValidPassword } from '../../utils.js';
+import { createHash, isValidPassword } from '../../../utils.js';
 
 export default class UserDao {
   async createUser(user) {
@@ -14,7 +14,6 @@ export default class UserDao {
           const newUser = await userModel.create({...user, password: createHash(password)})
           return newUser;
         }    
-
       } else {
         return false;
       }

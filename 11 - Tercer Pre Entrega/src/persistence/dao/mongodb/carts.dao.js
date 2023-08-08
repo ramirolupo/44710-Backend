@@ -1,36 +1,12 @@
-import { CartModel } from "./models/carts.model.js";
+import { cartModel } from "./models/carts.model.js";
+import { ticketModel } from './models/tickets.model.js'
 
 
 export default class CartsDaoMongoDB {
 
-  async purchase(idCart) {
-    try {
-        let remainingProds = [];
-        const cart = await CartModel.findById(idCart);
-        if (!cart) {
-            return res.status(404).json({ message: 'Cart does not exist' });
-        }
-        for (const item of cart.products) {
-            const product = item.product;
-            const quantityInCart = item.quantity;
-            if (!product || product.stock < quantityInCart) {
-                remainingProds.push(product._id);
-            }
-            product.stock -= quantityInCart;
-            await product.save();
-        }
-
-        
-       
-    } catch (error) {
-      console.error('There was an error during the purchase: ', err);
-      return null;
-    }
-}
-
   async getAllCarts() {
     try {
-     const response = await CartModel.find({});
+     const response = await cartModel.find({});
      if (!response) return null;
      return response;
     } catch (error) {
@@ -41,7 +17,7 @@ export default class CartsDaoMongoDB {
 
   async getCartById(id) {
     try {
-      const response = await CartModel.findById(id);
+      const response = await cartModel.findById(id);
       if (!response) return null;
       return response;
     } catch (error) {
@@ -51,7 +27,7 @@ export default class CartsDaoMongoDB {
 
   async createCart(obj) {
     try {
-      const response = await CartModel.create(obj);
+      const response = await cartModel.create(obj);
       return response;
     } catch (error) {
       console.log(error);
@@ -60,75 +36,16 @@ export default class CartsDaoMongoDB {
 
   async updateCart(id, obj) {
     try {
-      await CartModel.updateOne({_id: id}, obj);
+      await cartModel.updateOne({_id: id}, obj);
       return obj;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async updateProductCart (idCart, idProd, quantity) {
-    try {
-      const cart = await CartModel.findById(idCart);
-      if(!cart) return null;
-      const prodIndex = cart.products.findIndex(p => p.product._id.toString() === idProd.toString());
-      if (prodIndex !== -1) {
-        cart.products[prodIndex].quantity += quantity;
-      } else {
-        cart.products.push({ product: idProd, quantity: quantity }) 
-      }                         
-      await cart.save();                            
-      return cart;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-
-  async deleteCartProducts(idCart) {
-    try {
-      const response = await CartModel.findById(idCart);
-      if (!response) return null;
-      response.products = [];
-      await response.save();
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async deleteProductFromCart(idCart, idProd) {
-    try {
-      const cart = await CartModel.findById(idCart);
-
-      if(!cart) return null;
-
-      const prodIndex = cart.products.findIndex(p => p.product._id.toString() === idProd.toString());
-
-      if (prodIndex !== -1){
-        if (cart.products[prodIndex].quantity > 1) {
-          cart.products[prodIndex].quantity -= 1;
-          await cart.save();
-        } else {
-          const response = await CartModel.findByIdAndUpdate(
-            idCart,
-            { $pull: {products: { product: idProd }} },
-            { new: true } 
-          );
-          return response;
-        }} else {
-          throw new Error('Product not found')
-        };
-        
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-
   async deleteCart(idCart) {
     try {
-      const response = await CartModel.findByIdAndDelete(idCart);
+      const response = await cartModel.findByIdAndDelete(idCart);
       return response;
     } catch (error) {
       throw error;

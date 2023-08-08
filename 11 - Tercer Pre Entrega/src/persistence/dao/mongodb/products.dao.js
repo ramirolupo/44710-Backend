@@ -1,5 +1,5 @@
-import { ProductModel } from "./models/products.model.js";
-import { CartModel } from "./models/carts.model.js";
+import { productModel } from "./models/products.model.js";
+import { cartModel } from "./models/carts.model.js";
 
 export default class ProductDaoMongoDB {
 
@@ -17,18 +17,17 @@ export default class ProductDaoMongoDB {
         filter = { [key]: formattedValue };
       }
   
-      result = await ProductModel.paginate(filter, { page, limit, sort: { price: sort } });
+      result = await productModel.paginate(filter, { page, limit, sort: { price: sort } });
   
       return result;
     } catch (error) {
       console.log(error);
-      // Manejar el error adecuadamente o lanzar una excepción según tus necesidades
     }
   }
 
   async getProductById(idProd) {
     try {
-      const response = await ProductModel.findById(idProd);
+      const response = await productModel.findById(idProd);
       return response;
     } catch (error) {
       console.log(error);
@@ -37,7 +36,7 @@ export default class ProductDaoMongoDB {
 
   async createProduct(obj) {
     try {
-      const response = await ProductModel.create(obj);
+      const response = await productModel.create(obj);
       return response;
     } catch (error) {
       console.log(error);
@@ -46,7 +45,7 @@ export default class ProductDaoMongoDB {
 
   async updateProduct(idProd, obj) {
     try {
-      await ProductModel.updateOne({_id: idProd}, obj);
+      await productModel.updateOne({_id: idProd}, obj);
       return obj;
     } catch (error) {
       console.log(error);
@@ -55,10 +54,10 @@ export default class ProductDaoMongoDB {
 
   async addProductToCart(idProd, idCart) {
     try {
-      const cart = await CartModel.findById(idCart);
+      const cart = await cartModel.findById(idCart);
       if (!cart) { throw new Error('Cart not found')}
       const prodIndex = cart.products.findIndex(p => p.product._id.toString() === idProd.toString());
-      const product = await ProductModel.findById(idProd);
+      const product = await productModel.findById(idProd);
       if (!product) { throw new Error('Product not found')}
       if (prodIndex !== -1) {
         cart.products[prodIndex].quantity += 1;
@@ -75,7 +74,7 @@ export default class ProductDaoMongoDB {
 
   async deleteProduct(idProd) {
     try {
-      const response = await ProductModel.findByIdAndDelete(idProd);
+      const response = await productModel.findByIdAndDelete(idProd);
       return response;
     } catch (error) {
       console.log(error);

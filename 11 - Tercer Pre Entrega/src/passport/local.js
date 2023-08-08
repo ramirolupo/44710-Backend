@@ -1,4 +1,4 @@
-import UserDao from "../dao/mongodb/users.dao.js";
+import UserDao from "../persistence/dao/mongodb/users.dao.js";
 const userDao = new UserDao();
 import passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
@@ -15,6 +15,7 @@ const register = async (req, email, password, done) => {
         const user = await userDao.getByEmail(email);
         if(user) return done(null, false);
         const newUser = await userDao.createUser(req.body);
+        console.log(newUser);
         return done(null, newUser);
 
     } catch (error) {

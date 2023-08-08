@@ -35,8 +35,11 @@ const usersSchema = new mongoose.Schema({
   cart: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'carts',
-      required: true
-    }
+      required: true,
+      default: function () {
+        return new mongoose.Types.ObjectId()
+      }
+  }
 });
 
 export const userModel = mongoose.model('users',usersSchema)

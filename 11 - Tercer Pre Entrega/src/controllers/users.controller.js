@@ -1,5 +1,5 @@
 import { log } from "console";
-import UserDao from "../dao/mongodb/users.dao.js";
+import UserDao from "../persistence/dao/mongodb/users.dao.js";
 
 const userDao = new UserDao();
 

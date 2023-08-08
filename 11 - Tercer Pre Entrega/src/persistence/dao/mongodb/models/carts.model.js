@@ -22,6 +22,6 @@ cartSchema.pre(['find', 'findById'], function(){
     this.populate('products.product')
   })
 
-export const CartModel = mongoose.model('carts', cartSchema);
+export const cartModel = mongoose.model('carts', cartSchema);
 
 

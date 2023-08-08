@@ -1,4 +1,4 @@
-import ProductsDaoMongoDB from "../dao/mongodb/products.dao.js";
+import ProductsDaoMongoDB from "../persistence/dao/mongodb/products.dao.js";
 import fs from 'fs';
 import {__dirname} from '../utils.js';
 const prodDao = new ProductsDaoMongoDB();
