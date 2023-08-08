@@ -1,5 +1,5 @@
-import UserDao from "../persistence/dao/mongodb/users.dao.js";
-const userDao = new UserDao();
+import * as userServices from "../services/users.services.js";
+import * as cartServices from "../services/carts.services.js";
 import passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
 
@@ -10,27 +10,24 @@ const strategyOptions = {
 };
 
 const register = async (req, email, password, done) => {
-
     try {
-        const user = await userDao.getByEmail(email);
+        const user = await userServices.getUserByEmail(email);
         if(user) return done(null, false);
-        const newUser = await userDao.createUser(req.body);
-        console.log(newUser);
+        const newUser = await userServices.createUser(req.body);
+        const newCart = await cartServices.createCart(); //por aca esta el error
+        newUser.cart = newCart._id;
         return done(null, newUser);
-
     } catch (error) {
         console.log(error);      
     }
 };
 
 const login = async (req, email, password, done) => {
-
     try {
         const user = { email, password };
-        const userLogin = await userDao.loginUser(user);
+        const userLogin = await userServices.loginUser(user);
         if(!userLogin) return done(null, false);
         return done(null, userLogin);
-
     } catch (error) {
         console.log(error);
     };
@@ -47,7 +44,7 @@ passport.serializeUser(( user, done ) =>{
 });
 
 passport.deserializeUser(async( id, done) => {
-    const user = await userDao.getById(id);
+    const user = await userServices.getUserById(id);
     return done(null, user);
 
 });

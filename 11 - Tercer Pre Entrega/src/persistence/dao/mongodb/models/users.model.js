@@ -36,9 +36,7 @@ const usersSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'carts',
       required: true,
-      default: function () {
-        return new mongoose.Types.ObjectId()
-      }
+      default: new mongoose.Types.ObjectId()
   }
 });
 

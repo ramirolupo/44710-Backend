@@ -1,11 +1,16 @@
 import * as service from "../services/users.services.js";
 
-export const registerResponse = (req, res, next)=>{
+export const registerResponse = async(req, res, next)=>{
   try {
-      res.json({
-          msg: 'Register OK',
-          user: req.session.passport.user
-      })
+        const user = await service.getUserById(req.session.passport.user); //o esta aca el error?
+        const { email, cart } = user;
+        res.json({
+            msg: 'Register OK',
+            user: {
+                email,
+                cart
+            }
+        });
   } catch (error) {
       next(error);
   }

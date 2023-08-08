@@ -6,7 +6,7 @@ export const createUser = async (user) => {
     try {
         const { email, password } = user;
         const existUser = await userDao.getUserByEmail(email);
-        if(existUser){
+        if(!existUser){
           if(email === 'adminCoder@coder.com' && password === 'adminCoder123'){
             const newUser = await userDao.createUser({...user, password: createHash(password), role: 'admin'})
             return newUser;
@@ -15,7 +15,7 @@ export const createUser = async (user) => {
             return newUser;
           }    
         } else {
-            return res.status(404).json({ message: 'User not found' });
+            return null;
         }
       } catch (error) {
         console.log(error)
@@ -30,7 +30,7 @@ export const loginUser = async (user) => {
         const passValid = isValidPassword(userExist, password)
         if(!passValid) return null
         else return userExist
-      } return res.status(404).json({ message: 'User not found' });
+      } return null;
     } catch (error) {
       console.log(error)
     }
@@ -38,8 +38,8 @@ export const loginUser = async (user) => {
 
 export const getUserById = async (id) => {
     try {
-      const cart = await cartsDao.getUserById(id);
-      if (!cart) return res.status(404).json({ message: 'User not found' });
+      const cart = await userDao.getUserById(id);
+      if (!cart) return null;
       return cart;
     } catch (error) {
       console.log(error);
@@ -48,8 +48,8 @@ export const getUserById = async (id) => {
 
   export const getUserByEmail = async (email) => {
     try {
-      const cart = await cartsDao.getUserByEmail(email);
-      if (!cart) return res.status(404).json({ message: 'User not found' });
+      const cart = await userDao.getUserByEmail(email);
+      if (!cart) return null;
       return cart;
     } catch (error) {
       console.log(error);
