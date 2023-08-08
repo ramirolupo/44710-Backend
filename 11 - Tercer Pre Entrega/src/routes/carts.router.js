@@ -9,7 +9,7 @@ const router = Router();
 
 router.get('/', isAuth, isAdmin, controller.getAllCarts);
 
-router.get('/:idCart', isAuth, controller.getCartById);
+router.get('/:idCart', /*isAuth,*/ controller.getCartById);
 
 router.post('/', /*isAuth,*/ controller.createCart);
 

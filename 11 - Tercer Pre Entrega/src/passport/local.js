@@ -14,8 +14,10 @@ const register = async (req, email, password, done) => {
         const user = await userServices.getUserByEmail(email);
         if(user) return done(null, false);
         const newUser = await userServices.createUser(req.body);
-        const newCart = await cartServices.createCart(); //por aca esta el error
+        const newCart = await cartServices.createCart();
         newUser.cart = newCart._id;
+        await newUser.save();
+        console.log(newUser.cart);
         return done(null, newUser);
     } catch (error) {
         console.log(error);      
