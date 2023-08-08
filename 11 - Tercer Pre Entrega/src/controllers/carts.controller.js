@@ -3,11 +3,11 @@ import * as service from "../services/carts.services.js";
 
 export const purchase = async (req, res, next) => {
   try {
-    const { idCart } = req.params;
+    const idCart = req.user.cart;
     await service.purchase(idCart);
     return res.status(200).json({ message: 'Purchase successful' });
   } catch (error) {
-    console.error('There was an error during the purchase: ', err);
+    console.error('There was an error during the purchase: ', error);
     return res.status(500).json({ message: 'An error occurred while completing the purchase.' });
   }
 }

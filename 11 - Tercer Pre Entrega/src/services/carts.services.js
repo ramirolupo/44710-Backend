@@ -16,19 +16,18 @@ export const purchase = async (idCart) => {
                 const product = item.product;
                 const quantityInCart = item.quantity;
                 if (!product || product.stock < quantityInCart) {
-                    remainingProds.push(product._id);
+                    remainingProds.push(product._id); //como borro los productos ya comprados y como dejo los que tuvieron error?
                 }
-                product.stock -= quantityInCart;
-                await product.save();     
-                amount =+ product.price;
+                product.stock -= quantityInCart; 
+                amount += product.price;
               }
-            const ticket = { 
-              amount: amount,
-              purchaser: req.user //esta bien utilizado el req.user.email?
-             }
-             console.log(ticket);
-             await ticketsDao.createTicket(ticket);
-             // como asigno al ticket los datos?
+            // const ticket = { 
+            //   amount: amount,
+            //   purchaser: req.user //esta bien utilizado el req.user.email?
+            //  }
+            //  console.log(ticket);
+            //  await ticketsDao.createTicket(ticket);
+            //  // como asigno al ticket los datos?
         }
     } catch (error) {
       console.error('There was an error during the purchase: ', error);

@@ -6,17 +6,17 @@ import { isUser } from '../middlewares/isUser.js';
 
 const router = Router();
 
-router.post('/file', isAuth, isAdmin, controller.createFileCtr);
+router.post('/file', /*isAuth, isAdmin,*/ controller.createFileCtr);
 
-router.get('/', isAuth, controller.getAllProducts);
+router.get('/', /*isAuth,*/ controller.getAllProducts);
 
-router.get('/:idProd', isAuth, controller.getByIdProduct);
+router.get('/:idProd', /*isAuth,*/ controller.getByIdProduct);
 
-router.post('/add', isAuth, isAdmin, controller.createProduct);
+router.post('/add', /*isAuth, isAdmin,*/ controller.createProduct);
 
-router.post('/add/:idProd/:idCart', isAuth, isUser, controller.addProductToCart);
+router.post('/add/:idProd/:idCart', /*isAuth, isUser,*/ controller.addProductToCart);
 
-router.delete('/:idProd', isAuth, isAdmin, controller.deleteProduct);
+router.delete('/:idProd', /*isAuth, isAdmin,*/ controller.deleteProduct);
 
 
 export default router;

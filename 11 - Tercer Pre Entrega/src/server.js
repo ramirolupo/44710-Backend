@@ -19,7 +19,7 @@ app.use(
     saveUninitialized: true,
     store: new mongoStore({
       mongoUrl: config.MONGO_DB,
-      ttl: 10,
+      ttl: 180,
     }),
   })
 );
