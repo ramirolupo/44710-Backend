@@ -1,8 +1,5 @@
 import './db/db.js';
 import express from 'express';
-import productsRouter from './routes/products.router.js';
-import cartsRouter from './routes/carts.router.js';
-import usersRouter from './routes/users.router.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import session from 'express-session';
 import mongoStore from 'connect-mongo';

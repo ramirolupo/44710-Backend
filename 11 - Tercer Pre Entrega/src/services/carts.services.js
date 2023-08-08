@@ -1,6 +1,18 @@
 import CartsDaoMongoDB from "../dao/mongodb/carts.dao.js";
 const cartsDao = new CartsDaoMongoDB();
 
+
+export const purchase = async (idCart) => {
+  try {
+    const cart = await cartsDao.purchase(idCart);
+    return cart;
+  } catch (error) {
+    console.error('There was an error during the purchase: ', error);
+    return null;
+  }
+}
+
+
 export const getAllCarts = async () => {
     try {
       const carts = await cartsDao.getAllCarts();
@@ -85,3 +97,4 @@ export const getAllCarts = async () => {
       throw error;
     }
   };
+

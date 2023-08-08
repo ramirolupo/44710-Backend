@@ -1,7 +1,14 @@
-import { CartModel } from "./models/carts.model.js";
+import { TicketModel } from "./models/tickets.model.js";
 
 
-export default class CartsDaoMongoDB {
+export default class TicketsDaoMongoDB {
+
+ 
+            // console.error('Error al finalizar la compra:', err);
+            // return res.status(500).json({ message: 'Ha ocurrido un error al finalizar la compra' });
+
+
+    
 
   async getAllCarts() {
     try {

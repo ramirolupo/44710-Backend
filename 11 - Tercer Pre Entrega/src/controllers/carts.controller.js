@@ -1,4 +1,17 @@
 import * as service from "../services/carts.services.js";
+
+
+export const purchase = async (req, res, next) => {
+  try {
+    const { idCart } = req.params;
+    await service.purchase(idCart);
+    await service.deleteCart(idCart);
+    return res.status(200).json({ message: 'Purchase successful' });
+  } catch (error) {
+    console.error('There was an error during the purchase: ', err);
+    return res.status(500).json({ message: 'An error occurred while completing the purchase.' });
+  }
+}
   
 export const getAllCarts = async (req, res, next) => {
   try {
@@ -91,3 +104,4 @@ export const deleteCart = async (req, res, next) => {
         next(error);
     }
 };
+
