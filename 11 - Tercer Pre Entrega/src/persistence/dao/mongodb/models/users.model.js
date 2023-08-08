@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const usersSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   first_name: {
     type: String,
     required: true,
@@ -40,4 +40,8 @@ const usersSchema = new mongoose.Schema({
   }
 });
 
-export const userModel = mongoose.model('users',usersSchema)
+userSchema.pre(['findOne', 'findById'], function(){
+  this.populate('cart')
+})
+
+export const userModel = mongoose.model('users',userSchema)

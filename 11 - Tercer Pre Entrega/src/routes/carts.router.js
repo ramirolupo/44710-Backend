@@ -13,6 +13,8 @@ router.get('/:idCart', /*isAuth,*/ controller.getCartById);
 
 router.post('/', /*isAuth,*/ controller.createCart);
 
+router.post('/purchase', controller.purchase);
+
 router.put('/:idCart', isAuth, isUser, controller.updateCart); 
 
 router.put('/:idCart/products/:idProd', isAuth, isUser, controller.updateProductCart);

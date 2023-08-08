@@ -24,13 +24,12 @@ export const purchase = async (idCart) => {
               }
             const ticket = { 
               amount: amount,
-              purchaser: req.user.email //esta bien utilizado el req.user.email?
+              purchaser: req.user //esta bien utilizado el req.user.email?
              }
              console.log(ticket);
              await ticketsDao.createTicket(ticket);
              // como asigno al ticket los datos?
         }
-
     } catch (error) {
       console.error('There was an error during the purchase: ', error);
     }
@@ -94,7 +93,7 @@ export const getAllCarts = async () => {
       await cart.save();                            
       return cart;
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 

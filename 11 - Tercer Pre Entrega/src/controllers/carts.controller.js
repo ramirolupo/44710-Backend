@@ -5,7 +5,6 @@ export const purchase = async (req, res, next) => {
   try {
     const { idCart } = req.params;
     await service.purchase(idCart);
-    await service.deleteCart(idCart);
     return res.status(200).json({ message: 'Purchase successful' });
   } catch (error) {
     console.error('There was an error during the purchase: ', err);
