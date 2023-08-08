@@ -1,14 +1,10 @@
-import { log } from "console";
-import UserDao from "../persistence/dao/mongodb/users.dao.js";
-
-const userDao = new UserDao();
-
+import * as service from "../services/users.services.js";
 
 export const registerResponse = (req, res, next)=>{
   try {
       res.json({
           msg: 'Register OK',
-          session: req.session
+          user: req.session.passport.user
       })
   } catch (error) {
       next(error);
@@ -16,28 +12,27 @@ export const registerResponse = (req, res, next)=>{
 };
 
 export const loginResponse = async(req, res, next)=>{
-  try {
-      const user = await userDao.getById(req.session.passport.user);
-      const { first_name, last_name, email, age, role } = user;
-      res.json({
-          msg: 'Login OK',
-          session: req.session,
-          userData: {
-              first_name,
-              last_name,
-              email,
-              age,
-              role
-          }
-      })
-  } catch (error) {
-      next(error);
-  }
+    try {
+        const user = await service.getUserById(req.session.passport.user); //esto te da el id?
+        const { first_name, last_name, email, age, role } = user;
+        res.json({
+            msg: 'Login OK',
+            userData: {
+                first_name,
+                last_name,
+                email,
+                age,
+                role
+            }
+        })
+    } catch (error) {
+        next(error);
+    } 
 };
 
 export const loginAuthenticate = async(req, res, next)=>{
     try {
-        const user = await userDao.getById(req.session.passport.user);
+        const user = await service.getUserById(req.session.passport.user);
         const { email } = user;
         res.json({
             msg: `The user ${email} is logged in`
@@ -52,7 +47,6 @@ export const githubResponse = async(req, res, next)=>{
         const { first_name, last_name, email, role, isGithub } = req.user;
         res.json({
             msg: 'Register/Login Github OK',
-            session: req.session,
             userData: {
                 first_name,
                 last_name,
