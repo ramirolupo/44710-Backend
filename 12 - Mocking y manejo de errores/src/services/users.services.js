@@ -1,4 +1,4 @@
-import { createHash, isValidPassword } from '../utils.js';
+import { createHash, isValidPassword } from '../utils/utils.js';
 import UserDao from '../persistence/dao/mongodb/users.dao.js';
 const userDao = new UserDao;
 
@@ -18,7 +18,7 @@ export const createUser = async (user) => {
             return null;
         }
       } catch (error) {
-        console.log(error)
+        throw new Error(error.message);
       }
 };
 
@@ -32,7 +32,7 @@ export const loginUser = async (user) => {
         else return userExist
       } return null;
     } catch (error) {
-      console.log(error)
+      throw new Error(error.message);
     }
   };
 
@@ -42,7 +42,7 @@ export const getUserById = async (id) => {
       if (!cart) return null;
       return cart;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 
@@ -52,6 +52,6 @@ export const getUserById = async (id) => {
       if (!cart) return null;
       return cart;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };

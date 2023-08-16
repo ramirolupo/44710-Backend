@@ -7,7 +7,7 @@ export default class UserDao {
       const response = await userModel.create(user);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);;
     }
   }
   
@@ -17,7 +17,7 @@ export default class UserDao {
       if (!userExist) return null;
       return userExist;
     } catch (error) {
-      console.log(error)
+      throw new Error(error.message);
     }
   }
 
@@ -27,7 +27,7 @@ export default class UserDao {
       if (!userExist) return null;
       return userExist;
     } catch (error) {
-      console.log(error)
+      throw new Error(error.message);
     }
   }
 

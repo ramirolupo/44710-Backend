@@ -10,8 +10,7 @@ export default class CartsDaoMongoDB {
      if (!response) return null;
      return response;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw new Error(error.message);
     }
   }
 
@@ -21,7 +20,7 @@ export default class CartsDaoMongoDB {
       if (!response) return null;
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -30,7 +29,7 @@ export default class CartsDaoMongoDB {
       const response = await cartModel.create(obj);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -39,7 +38,7 @@ export default class CartsDaoMongoDB {
       await cartModel.updateOne({_id: id}, obj);
       return obj;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -48,7 +47,7 @@ export default class CartsDaoMongoDB {
       const response = await cartModel.findByIdAndDelete(idCart);
       return response;
     } catch (error) {
-      throw error;
+      throw new Error(error.message);
     }
   }
 }

@@ -30,7 +30,7 @@ export const purchase = async (idCart) => {
             //  // como asigno al ticket los datos?
         }
     } catch (error) {
-      console.error('There was an error during the purchase: ', error);
+      throw new Error(error.message);
     }
 }
 
@@ -41,7 +41,7 @@ export const getAllCarts = async () => {
       if (!carts) return null;
       else return carts;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 
@@ -51,7 +51,7 @@ export const getAllCarts = async () => {
       if (!cart) return null;
       return cart;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 
@@ -61,7 +61,7 @@ export const getAllCarts = async () => {
       if (!cart) return null;
       else return cart;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
   
@@ -75,7 +75,7 @@ export const getAllCarts = async () => {
         return cartUpdated;
       }
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 
@@ -92,7 +92,7 @@ export const getAllCarts = async () => {
       await cart.save();                            
       return cart;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 
@@ -104,7 +104,7 @@ export const getAllCarts = async () => {
           await response.save();
           return response;
       } catch (error) {
-         console.log(error);
+         throw new Error(error.message);
       }
     };
 
@@ -129,7 +129,7 @@ export const getAllCarts = async () => {
             };
           
       } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
       }
     };
 
@@ -138,7 +138,7 @@ export const getAllCarts = async () => {
         const cart = await cartsDao.deleteCart(idCart);
         return cart;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 

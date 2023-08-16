@@ -1,10 +1,27 @@
 import ProductsDaoMongoDB from "../persistence/dao/mongodb/products.dao.js";
 import CartsDaoMongoDB from "../persistence/dao/mongodb/carts.dao.js";
 import fs from 'fs';
-import {__dirname} from '../utils.js';
+import {__dirname} from '../utils/utils.js';
+import { join } from 'path';
 const prodDao = new ProductsDaoMongoDB();
 const cartDao = new CartsDaoMongoDB();
-const ProductsFile = JSON.parse(fs.readFileSync(__dirname+'/data/products.json', 'utf-8'));
+const ProductsFile = JSON.parse(fs.readFileSync(join(__dirname, '..', 'data/products.json'), 'utf-8'));
+import {generateProduct} from '../utils/utils.js';
+
+export const createProductsMock = async (cant = 100) => {
+  try {
+    const productsArray = [];
+    for (let i = 0; i < cant; i++) {
+      const user = generateProduct();
+      productsArray.push(user);
+    }
+    const products = await prodDao.createProduct(productsArray);
+    return products;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+  
+};
 
 export const createFileProduct = async () => {
     try {
@@ -12,7 +29,7 @@ export const createFileProduct = async () => {
       if (!newProduct) return null;
       return { message: '¡Products saved successfully!' };
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 
@@ -21,7 +38,7 @@ export const getAllProducts = async (page, limit, sort, query) => {
      const products = await prodDao.getAllProducts(page, limit, sort, query);
      return products;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
 };
 
@@ -31,7 +48,7 @@ export const getProductById = async (idProd) => {
       if(!prod) return null;
       return prod;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
   
@@ -41,7 +58,7 @@ export const getProductById = async (idProd) => {
       if(!newProd) return null;
       else return newProd;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
   
@@ -52,7 +69,7 @@ export const getProductById = async (idProd) => {
         const prodUpd = await prodDao.updateProduct(idProd, obj);
         return prodUpd;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 
@@ -72,7 +89,7 @@ export const getProductById = async (idProd) => {
         await cart.save();                            
         return cart;
       } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
       }
   };
   
@@ -81,6 +98,15 @@ export const getProductById = async (idProd) => {
        const prodDel = await prodDao.deleteProduct(idProd);
        return prodDel;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
+    }
+  };
+
+  export const deleteAllProducts = async () => {
+    try {
+       const prodDel = await prodDao.deleteAllProducts();
+       return prodDel;
+    } catch (error) {
+      throw new Error(error.message);
     }
   };

@@ -7,7 +7,7 @@ export default class TicketsDaoMongoDB {
           const response = await ticketModel.create(obj);
           return response;
         } catch (error) {
-          console.log(error);
+          throw new Error(error.message);
         }
       }
 }

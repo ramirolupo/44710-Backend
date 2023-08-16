@@ -1,4 +1,15 @@
 import * as service from "../services/products.services.js";
+
+
+export const createProductsMock = async (req, res, next) => {
+  const { cant } = req.query;
+  try {
+    const response = await service.createProductsMock(cant);
+    res.status(200).json({ products: response });
+  } catch (error) {
+    next(error);
+  }
+};
   
 export const createFileCtr = async (req, res, next) => {
   try {
@@ -98,6 +109,15 @@ export const deleteProduct = async (req, res, next) => {
     const { idProd } = req.params;
     await service.deleteProduct(idProd);
     res.json({message: 'Product deleted successfully!'})
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteAllProducts = async (req, res, next) => {
+  try {
+    await service.deleteAllProducts();
+    res.json({message: 'Products deleted successfully!'})
   } catch (error) {
     next(error);
   }

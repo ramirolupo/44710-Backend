@@ -4,7 +4,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import session from 'express-session';
 import mongoStore from 'connect-mongo';
 import passport from 'passport';
-import config from './config.js';
+import config from './config/config.js';
 import routerApi from './routes/index.js';
 import './passport/local.js';
 import './passport/github.js';
